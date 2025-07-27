@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
+import { Plus, Target, DollarSign, AlertCircle } from "lucide-react";
 import { Currency } from "@/types";
 import { validateGoalForm } from "@/utils/storage";
 import { Button } from "@/components/ui/Button";
@@ -33,8 +35,6 @@ export function AddGoalForm({ onAddGoal }: AddGoalFormProps) {
 
     try {
       onAddGoal(name, amount, currency);
-
-      // Reset form
       setName("");
       setTargetAmount("");
       setCurrency("INR");
@@ -56,42 +56,66 @@ export function AddGoalForm({ onAddGoal }: AddGoalFormProps) {
   };
 
   return (
-    <>
-      <Button onClick={() => setIsOpen(true)} className="mb-6">
-        <span className="mr-2">➕</span>
-        Add New Goal
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <Button
+        onClick={() => setIsOpen(true)}
+        className="w-full mb-6 py-4 bg-syfe-gradient hover:bg-syfe-gradient-dark"
+      >
+        <Plus className="w-5 h-5 mr-2" />
+        <span className="text-base">Create New Goal</span>
       </Button>
 
       <Modal isOpen={isOpen} onClose={handleClose} title="Create New Goal">
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Goal Name */}
-          <div>
+        <motion.form
+          onSubmit={handleSubmit}
+          className="space-y-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
+        >
+          <motion.div
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+          >
             <label
               htmlFor="goalName"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="flex items-center text-sm font-medium text-gray-700 mb-2"
             >
+              <Target className="w-4 h-4 mr-2 text-blue-500" />
               Goal Name
             </label>
-            <input
+            <motion.input
               type="text"
               id="goalName"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g., Emergency Fund, Trip to Japan"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
               required
+              whileFocus={{ scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
             />
-          </div>
+          </motion.div>
 
-          {/* Target Amount */}
-          <div>
+          
+          <motion.div
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
+          >
             <label
               htmlFor="targetAmount"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="flex items-center text-sm font-medium text-gray-700 mb-2"
             >
+              <DollarSign className="w-4 h-4 mr-2 text-green-500" />
               Target Amount
             </label>
-            <input
+            <motion.input
               type="number"
               id="targetAmount"
               value={targetAmount}
@@ -99,63 +123,78 @@ export function AddGoalForm({ onAddGoal }: AddGoalFormProps) {
               placeholder="0"
               min="1"
               step="0.01"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
               required
+              whileFocus={{ scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
             />
-          </div>
+          </motion.div>
 
-          {/* Currency */}
-          <div>
+          
+          <motion.div
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.3 }}
+          >
             <label
               htmlFor="currency"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="block text-sm font-medium text-gray-700 mb-2"
             >
               Currency
             </label>
-            <select
+            <motion.select
               id="currency"
               value={currency}
               onChange={(e) => setCurrency(e.target.value as Currency)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+              whileFocus={{ scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
             >
               <option value="INR">Indian Rupee (₹)</option>
               <option value="USD">US Dollar ($)</option>
-            </select>
-          </div>
+            </motion.select>
+          </motion.div>
 
-          {/* Error Messages */}
+          
           {errors.length > 0 && (
-            <div className="bg-red-50 border border-red-200 rounded-md p-3">
+            <motion.div
+              className="bg-red-50 border border-red-200 rounded-lg p-4"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3 }}
+            >
               <div className="flex">
-                <div className="text-red-400">
-                  <svg
-                    className="w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
+                <AlertCircle className="w-5 h-5 text-red-400 mt-0.5" />
                 <div className="ml-3">
                   <h3 className="text-sm font-medium text-red-800">
                     Please fix the following errors:
                   </h3>
-                  <ul className="mt-2 text-sm text-red-700 list-disc list-inside">
+                  <ul className="mt-2 text-sm text-red-700 space-y-1">
                     {errors.map((error, index) => (
-                      <li key={index}>{error}</li>
+                      <motion.li
+                        key={index}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.3, delay: index * 0.1 }}
+                        className="flex items-center"
+                      >
+                        <span className="w-1.5 h-1.5 bg-red-400 rounded-full mr-2" />
+                        {error}
+                      </motion.li>
                     ))}
                   </ul>
                 </div>
               </div>
-            </div>
+            </motion.div>
           )}
 
-          {/* Action Buttons */}
-          <div className="flex justify-end space-x-3 pt-4">
+         
+          <motion.div
+            className="flex justify-end space-x-3 pt-6"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.4 }}
+          >
             <Button
               type="button"
               variant="secondary"
@@ -165,11 +204,12 @@ export function AddGoalForm({ onAddGoal }: AddGoalFormProps) {
               Cancel
             </Button>
             <Button type="submit" loading={isSubmitting}>
+              <Target className="w-4 h-4 mr-2" />
               Create Goal
             </Button>
-          </div>
-        </form>
+          </motion.div>
+        </motion.form>
       </Modal>
-    </>
+    </motion.div>
   );
 }
