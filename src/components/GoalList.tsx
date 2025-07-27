@@ -101,21 +101,39 @@ export function GoalList({
           No goals yet
         </motion.h3>
         <motion.p
-          className="text-gray-600 mb-6 max-w-md mx-auto"
+          className="text-gray-600 mb-8 max-w-md mx-auto"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
         >
           Start your savings journey by creating your first financial goal!
         </motion.p>
+
         <motion.div
-          className="flex items-center justify-center text-sm text-blue-600"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          className="flex justify-center mb-6"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
         >
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Button
+              onClick={() => setIsAddGoalOpen(true)}
+              className="bg-syfe-gradient hover:bg-syfe-gradient-dark text-lg px-8 py-4"
+            >
+              <Plus className="w-5 h-5 mr-2" />
+              Create Your First Goal
+            </Button>
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          className="flex items-center justify-center text-sm text-gray-500"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+        >
           <TrendingUp className="w-4 h-4 mr-1" />
-          Click &quot;Add New Goal&quot; to get started
+          Set targets, track progress, achieve success
         </motion.div>
       </motion.div>
     );
