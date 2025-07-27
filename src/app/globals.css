@@ -24,4 +24,12 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+
+  .bg-syfe-gradient {
+    background: linear-gradient(to right, rgb(147 51 234), rgb(29 78 216));
+  }
+
+  .hover\:bg-syfe-gradient-dark:hover {
+    background: linear-gradient(to right, rgb(126 34 206), rgb(30 64 175));
+  }
 }
