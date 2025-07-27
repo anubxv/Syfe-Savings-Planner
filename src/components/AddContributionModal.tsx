@@ -67,7 +67,6 @@ export function AddContributionModal({
       title={`Add Contribution to ${goalName}`}
     >
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Amount */}
         <div>
           <label
             htmlFor="amount"
@@ -107,7 +106,7 @@ export function AddContributionModal({
           />
         </div>
 
-        {/* Error Messages */}
+
         {errors.length > 0 && (
           <div className="bg-red-50 border border-red-200 rounded-md p-3">
             <div className="flex">
@@ -138,7 +137,6 @@ export function AddContributionModal({
           </div>
         )}
 
-        {/* Action Buttons */}
         <div className="flex justify-end space-x-3 pt-4">
           <Button
             type="button"

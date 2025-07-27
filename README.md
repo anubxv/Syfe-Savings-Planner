@@ -1,10 +1,20 @@
 # 💰 Syfe Savings Planner
 
 I have tried to create A modern, lightweight yet user-friendly, goal-based savings planner built with Next.js 15, TypeScript, and Tailwind CSS. We can Track multiple financial goals with real-time currency conversion between INR and USD.
+]
+I have followed a step by step approach where I focused on modularity of the application, reusable components anda structured approach in keeping track of code enhancement.
+
+The first milestone was to make sure the application becomes functional with all the elements in place and a decent designing. 
+
+As I got hold on the application, I tried to add some motion and liveliness by enhancing the designing, integrating animation, splash screen, framer motion. 
+
+To preserve the old form, i have saved the earlier code of the functional design as "old-design" branch. 
+
+The live demo has the enhanced design followed, in compliance with the assignment narrative.
 
 ## 🚀 Live Demo
 
-[View Live Demo]
+[View Live Demo](https://syfeplanner.vercel.app/)
 
 ## ✨ Features
 
@@ -91,12 +101,12 @@ The app will work without an API key by using fallback exchange rates.
 
 ```
 src/
-├── app/                    # Next.js App Router
+├── app/                   # Next.js App Router
 │   ├── globals.css        # Global styles
 │   ├── layout.tsx         # Root layout
 │   └── page.tsx           # Home page
 ├── components/            # React components
-│   ├── ui/               # Reusable UI components
+│   ├── ui/                # Reusable UI components
 │   │   ├── Button.tsx
 │   │   ├── Modal.tsx
 │   │   └── ProgressBar.tsx
