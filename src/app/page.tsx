@@ -1,12 +1,16 @@
 "use client";
 
-import { useGoals, useExchangeRate } from "@/hooks/useGoals";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { SplashScreen } from "@/components/SplashScreen";
+import { Logo } from "@/components/ui/Logo";
 import { Dashboard } from "@/components/Dashboard";
-import { AddGoalForm } from "@/components/AddGoalForm";
 import { GoalList } from "@/components/GoalList";
 import { ExchangeRateDisplay } from "@/components/ExchangeRateDisplay";
+import { useGoals, useExchangeRate } from "@/hooks/useGoals";
 
 export default function HomePage() {
+  const [showSplash, setShowSplash] = useState(true);
   const {
     goals,
     loading: goalsLoading,
@@ -20,6 +24,10 @@ export default function HomePage() {
     error: rateError,
     refreshRate,
   } = useExchangeRate();
+
+  if (showSplash) {
+    return <SplashScreen onComplete={() => setShowSplash(false)} />;
+  }
 
   if (goalsLoading) {
     return (
@@ -51,54 +59,107 @@ export default function HomePage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl">
-      {/* Header */}
-      <header className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">
-          💰 Syfe Savings Planner
-        </h1>
-        <p className="text-xl text-gray-600">
-          Track your financial goals with multi-currency support
-        </p>
-      </header>
+    <motion.div
+      className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 p-6 lg:p-8"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
+      <div className="max-w-7xl mx-auto">
+        <motion.header
+          className="text-center mb-8"
+          initial={{ y: -30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+        >
+          <div className="flex justify-center mb-4">
+            <Logo size="lg" />
+          </div>
+          <p className="text-gray-600 text-lg">
+            Plan, save, and achieve your financial goals
+          </p>
+        </motion.header>
 
-      {/* Dashboard */}
-      <Dashboard goals={goals} exchangeRate={exchangeRate} />
+        <motion.div
+          className="space-y-8"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.1,
+                delayChildren: 0.3,
+              },
+            },
+          }}
+        >
+          
+          <motion.div
+            className="grid gap-8 lg:grid-cols-3"
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: { duration: 0.6, ease: "easeOut" },
+              },
+            }}
+          >
+            <motion.div
+              className="lg:col-span-2"
+              variants={{
+                hidden: { x: -30, opacity: 0 },
+                visible: {
+                  x: 0,
+                  opacity: 1,
+                  transition: { duration: 0.6, ease: "easeOut" },
+                },
+              }}
+            >
+              <Dashboard goals={goals} exchangeRate={exchangeRate} />
+            </motion.div>
 
-      {/* Exchange Rate Display */}
-      <ExchangeRateDisplay
-        exchangeRate={exchangeRate}
-        loading={rateLoading}
-        error={rateError}
-        onRefresh={refreshRate}
-      />
+            <motion.div
+              variants={{
+                hidden: { x: 30, opacity: 0 },
+                visible: {
+                  x: 0,
+                  opacity: 1,
+                  transition: { duration: 0.6, ease: "easeOut" },
+                },
+              }}
+            >
+              <ExchangeRateDisplay
+                exchangeRate={exchangeRate}
+                loading={rateLoading}
+                error={rateError}
+                onRefresh={refreshRate}
+              />
+            </motion.div>
+          </motion.div>
 
-      {/* Add Goal Form */}
-      <AddGoalForm onAddGoal={addGoal} />
-
-      {/* Goals Section */}
-      <section>
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">
-            Your Goals {goals.length > 0 && `(${goals.length})`}
-          </h2>
-        </div>
-
-        <GoalList
-          goals={goals}
-          exchangeRate={exchangeRate}
-          onAddContribution={addContribution}
-          onDeleteGoal={deleteGoal}
-        />
-      </section>
-
-      {/* Footer */}
-      <footer className="mt-16 pt-8 border-t border-gray-200 text-center text-gray-500">
-        <p>
-          © 2025 Syfe Savings Planner. Built with Next.js, TypeScript, and
-          Tailwind CSS.
-        </p>
-      </footer>
-    </div>
+          
+          <motion.div
+            variants={{
+              hidden: { y: 30, opacity: 0 },
+              visible: {
+                y: 0,
+                opacity: 1,
+                transition: { duration: 0.6, delay: 0.2, ease: "easeOut" },
+              },
+            }}
+          >
+            <GoalList
+              goals={goals}
+              exchangeRate={exchangeRate}
+              onAddContribution={addContribution}
+              onDeleteGoal={deleteGoal}
+              onAddGoal={addGoal}
+            />
+          </motion.div>
+        </motion.div>
+      </div>
+    </motion.div>
   );
 }
