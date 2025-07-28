@@ -1,7 +1,7 @@
 # 💰 Syfe Savings Planner
 
 I have tried to create A modern, lightweight yet user-friendly, goal-based savings planner built with Next.js 15, TypeScript, and Tailwind CSS. We can Track multiple financial goals with real-time currency conversion between INR and USD.
-]
+
 I have followed a step by step approach where I focused on modularity of the application, reusable components anda structured approach in keeping track of code enhancement.
 
 The first milestone was to make sure the application becomes functional with all the elements in place and a decent designing. 
